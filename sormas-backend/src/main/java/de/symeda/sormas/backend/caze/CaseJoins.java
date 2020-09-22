@@ -34,6 +34,7 @@ public class CaseJoins<T extends AbstractDomainObject> extends AbstractDomainObj
 	private Join<Person, Location> personAddress;
 	private Join<Location, Region> personAddressRegion;
 	private Join<Location, District> personAddressDistrict;
+	private Join<Location, Facility> personAddressFacility;
 	private Join<Person, Facility> occupationFacility;
 	private Join<Case, Hospitalization> hospitalization;
 	private Join<Case, EpiData> epiData;
@@ -139,6 +140,14 @@ public class CaseJoins<T extends AbstractDomainObject> extends AbstractDomainObj
 
 	private void setPersonAddressDistrict(Join<Location, District> personAddressDistrict) {
 		this.personAddressDistrict = personAddressDistrict;
+	}
+
+	public Join<Location, Facility> getPersonAddressFacility() {
+		return getOrCreate(personAddressFacility, Location.FACILITY, JoinType.LEFT, getAddress(), this::setPersonAddressFacility);
+	}
+
+	private void setPersonAddressFacility(Join<Location, Facility> personAddressFacility) {
+		this.personAddressFacility = personAddressFacility;
 	}
 
 	public Join<Person, Facility> getOccupationFacility() {

@@ -5317,4 +5317,15 @@ ALTER TABLE contact_history ADD COLUMN quarantinereduced boolean DEFAULT false;
 
 INSERT INTO schema_version (version_number, comment) VALUES (253, 'Store if quarantine period has been reduced #2235');
 
+-- 2020-09-22 Add facility fields to location and refactor occupation facilities for persons #2456
+
+ALTER TABLE location ADD COLUMN facilitytype varchar(255);
+ALTER TABLE location_history ADD COLUMN facilitytype varchar(255);
+ALTER TABLE location ADD COLUMN facility_id bigint;
+ALTER TABLE location_history ADD COLUMN facility_id bigint;
+ALTER TABLE location ADD CONSTRAINT fk_location_facility_id FOREIGN KEY (facility_id) REFERENCES facility(id);
+ALTER TABLE location ADD COLUMN facilitydetails varchar(512);
+ALTER TABLE location_history ADD COLUMN facilitydetails varchar(512);
+
+INSERT INTO schema_version (version_number, comment) VALUES (254, 'Add facility fields to location and refactor occupation facilities for persons #2456');
 -- *** Insert new sql commands BEFORE this line ***
